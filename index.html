@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odliczanie do 15 grudnia 2026</title>
+  
+  <link href="https://fonts.cdnfonts.com/css/seven-segment" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #050505;
+      color: #00ff66;
+      font-family: 'Seven Segment', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: #008833;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* Obudowa zegara LED */
+    .timer-container {
+      background: #0a0a0a;
+      padding: 30px 40px;
+      border-radius: 15px;
+      border: 2px solid #111;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.8);
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .segment-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Wyświetlacz cyfrowy z efektem poświaty (Glow) */
+    .display {
+      position: relative;
+      background: #011105;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 4.5rem;
+      letter-spacing: 2px;
+      min-width: 130px;
+      text-align: center;
+      color: #00ff66;
+      text-shadow: 0 0 10px #00ff66, 0 0 20px #00ff66;
+      border: 1px solid #003311;
+    }
+
+    /* Tło z wygaszonych segmentów LED (efekt prawdziwego wyświetlacza) */
+    .display::before {
+      content: "888";
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      right: 15px;
+      opacity: 0.05;
+      color: #00ff66;
+      pointer-events: none;
+    }
+
+    .label {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.85rem;
+      color: #00aa44;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .colon {
+      font-size: 4rem;
+      align-self: flex-start;
+      margin-top: 5px;
+      color: #00ff66;
+      text-shadow: 0 0 10px #00ff66;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.2; }
+    }
+
+    @media (max-width: 600px) {
+      .display {
+        font-size: 3rem;
+        min-width: 90px;
+      }
+      .colon {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Odliczanie do 15 Grudnia 2026</h1>
+
+  <div class="timer-container">
+    <div class="segment-group">
+      <div class="display" id="days">000</div>
+      <div class="label">Dni</div>
+    </div>
+
+    <div class="colon">:</div>
+
+    <div class="segment-group">
+      <div class="display" id="hours">00</div>
+      <div class="label">Godziny</div>
+    </div>
+
+    <div class="colon">:</div>
+
+    <div class="segment-group">
+      <div class="display" id="minutes">00</div>
+      <div class="label">Minuty</div>
+    </div>
+
+    <div class="colon">:</div>
+
+    <div class="segment-group">
+      <div class="display" id="seconds">00</div>
+      <div class="label">Sekundy</div>
+    </div>
+  </div>
+
+  <script>
+    const targetDate = new Date('December 15, 2026 00:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        document.querySelector('.timer-container').innerHTML = 
+          '<div class="display" style="width:100%">00:00:00:00</div>';
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(3, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
