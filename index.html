@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Odliczanie</title>
   
+  <!-- Czcionka imitująca wyświetlacz 7-segmentowy LED -->
   <link href="https://fonts.cdnfonts.com/css/seven-segment" rel="stylesheet">
 
   <style>
@@ -36,11 +37,6 @@
       gap: 20px;
       flex-wrap: wrap;
       justify-content: center;
-    }
-
-    .segment-group {
-      display: flex;
-      flex-direction: column;
       align-items: center;
     }
 
@@ -71,22 +67,12 @@
       pointer-events: none;
     }
 
-    .label {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 0.85rem;
-      color: #aa0000;
-      margin-top: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
     .colon {
       font-size: 4rem;
-      align-self: flex-start;
-      margin-top: 5px;
       color: #ff0000;
       text-shadow: 0 0 10px #ff0000;
       animation: blink 1s infinite;
+      line-height: 1;
     }
 
     @keyframes blink {
@@ -107,31 +93,13 @@
 <body>
 
   <div class="timer-container">
-    <div class="segment-group">
-      <div class="display" id="days">000</div>
-      <div class="label">Dni</div>
-    </div>
-
+    <div class="display" id="days">000</div>
     <div class="colon">:</div>
-
-    <div class="segment-group">
-      <div class="display" id="hours">00</div>
-      <div class="label">Godziny</div>
-    </div>
-
+    <div class="display" id="hours">00</div>
     <div class="colon">:</div>
-
-    <div class="segment-group">
-      <div class="display" id="minutes">00</div>
-      <div class="label">Minuty</div>
-    </div>
-
+    <div class="display" id="minutes">00</div>
     <div class="colon">:</div>
-
-    <div class="segment-group">
-      <div class="display" id="seconds">00</div>
-      <div class="label">Sekundy</div>
-    </div>
+    <div class="display" id="seconds">00</div>
   </div>
 
   <script>
