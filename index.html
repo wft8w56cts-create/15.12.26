@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Odliczanie</title>
   
-  <!-- Czcionka imitująca wyświetlacz 7-segmentowy LED -->
   <link href="https://fonts.cdnfonts.com/css/seven-segment" rel="stylesheet">
 
   <style>
@@ -24,82 +23,89 @@
       align-items: center;
       min-height: 100vh;
       overflow: hidden;
+      padding: 10px;
     }
 
-    /* Obudowa zegara LED */
+    /* Zewnętrzny kontener skalujący */
+    .timer-wrapper {
+      width: 100%;
+      max-width: 900px;
+      container-type: inline-size;
+    }
+
+    /* Obudowa zegara LED - sztywne zachowanie jednej linii */
     .timer-container {
       background: #0a0a0a;
-      padding: 30px 40px;
+      padding: 3cqw 4cqw;
       border-radius: 15px;
       border: 2px solid #111;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.8);
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
       align-items: center;
+      gap: 1.5cqw;
+      width: 100%;
     }
 
-    /* Czerwony wyświetlacz z poświatą (Glow) */
+    /* Wyświetlacz reagujący rozmiarem na szerokość kontenera */
     .display {
       position: relative;
       background: #110000;
-      padding: 10px 15px;
+      padding: 1cqw 1.5cqw;
       border-radius: 8px;
-      font-size: 4.5rem;
-      letter-spacing: 2px;
-      min-width: 130px;
+      font-size: 8cqw;
+      letter-spacing: 0.2cqw;
       text-align: center;
       color: #ff0000;
       text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
       border: 1px solid #330000;
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     /* Tło z wygaszonych segmentów LED */
     .display::before {
       content: "888";
       position: absolute;
-      top: 10px;
-      left: 15px;
-      right: 15px;
       opacity: 0.05;
       color: #ff0000;
       pointer-events: none;
     }
 
+    /* Wyjątek dla jednostek z 2 cyframi */
+    .display.short::before {
+      content: "88";
+    }
+
     .colon {
-      font-size: 4rem;
+      font-size: 7cqw;
       color: #ff0000;
       text-shadow: 0 0 10px #ff0000;
       animation: blink 1s infinite;
       line-height: 1;
+      flex: 0 0 auto;
     }
 
     @keyframes blink {
       50% { opacity: 0.2; }
     }
-
-    @media (max-width: 600px) {
-      .display {
-        font-size: 3rem;
-        min-width: 90px;
-      }
-      .colon {
-        display: none;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <div class="timer-container">
-    <div class="display" id="days">000</div>
-    <div class="colon">:</div>
-    <div class="display" id="hours">00</div>
-    <div class="colon">:</div>
-    <div class="display" id="minutes">00</div>
-    <div class="colon">:</div>
-    <div class="display" id="seconds">00</div>
+  <div class="timer-wrapper">
+    <div class="timer-container">
+      <div class="display" id="days">000</div>
+      <div class="colon">:</div>
+      <div class="display short" id="hours">00</div>
+      <div class="colon">:</div>
+      <div class="display short" id="minutes">00</div>
+      <div class="colon">:</div>
+      <div class="display short" id="seconds">00</div>
+    </div>
   </div>
 
   <script>
